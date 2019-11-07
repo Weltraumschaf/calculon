@@ -5,12 +5,10 @@ import (
     "log"
     "os"
     "github.com/urfave/cli"
+    "errors"
 )
 
 var app = cli.NewApp()
-
-// https://itnext.io/how-to-create-your-own-cli-with-golang-3c50727ac608
-// http://jodies.de/ipcalc?host=10.0.0.0&mask1=16&mask2=
 
 func main() {
     app.Name = "calculon"
@@ -20,13 +18,20 @@ func main() {
     app.Description = "TODO Description"
     app.Version = "1.0.0"
     app.Action = func(c *cli.Context) error {
-        fmt.Println("boom! I say!")
+        firstArg := c.Args().First();
+
+        if len(firstArg) == 0 {
+            return errors.New("no IP given")
+        }
+
+        fmt.Printf("Given: %q\n", firstArg)
         return nil
     }
     
     err := app.Run(os.Args)
 
     if err != nil {
-        log.Fatal(err)
+        fmt.Println(err.Error())
+        os.Exit(1)
     }
 }
