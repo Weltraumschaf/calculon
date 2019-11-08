@@ -1,11 +1,12 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "os"
-    "github.com/urfave/cli"
     "errors"
+    "fmt"
+    "github.com/urfave/cli"
+    "net"
+    "os"
+    "strings"
 )
 
 var app = cli.NewApp()
@@ -13,25 +14,56 @@ var app = cli.NewApp()
 func main() {
     app.Name = "calculon"
     app.Usage = "Tool to calculate IP stuff"
+    app.UsageText = app.Name + " 192.168.123.0/24"
     app.Author = "Sven Strittmatter"
     app.Email = "ich@weltraumschaf.de"
     app.Description = "TODO Description"
     app.Version = "1.0.0"
     app.Action = func(c *cli.Context) error {
-        firstArg := c.Args().First();
+        firstArg := c.Args().First()
 
         if len(firstArg) == 0 {
-            return errors.New("no IP given")
+            return errors.New("No IP given!")
         }
 
-        fmt.Printf("Given: %q\n", firstArg)
+        ip := net.ParseIP(firstArg)
+
+        fmt.Printf("Given: %q\n", ip)
         return nil
     }
-    
+
     err := app.Run(os.Args)
 
     if err != nil {
-        fmt.Println(err.Error())
+        fmt.Println("Error:", err.Error())
         os.Exit(1)
     }
+}
+
+func ExtractIpAddress(ipWithNetMask string) string {
+    if len(ipWithNetMask) == 0 {
+        return ""
+    }
+
+    position := strings.Index(ipWithNetMask, "/")
+
+    if position > -1 {
+        return ipWithNetMask[:position]
+    }
+
+    return ipWithNetMask
+}
+
+func ExtractNetMask(ipWithNetMask string) string {
+    if len(ipWithNetMask) == 0 {
+        return ""
+    }
+
+    position := strings.Index(ipWithNetMask, "/")
+
+    if position > -1 {
+        return ipWithNetMask[position + 1:]
+    }
+
+    return ""
 }
