@@ -29,11 +29,11 @@ func TestExtractNetMask(t *testing.T) {
     assert.Equal(t, "24", ExtractNetMask("192.168.123.0/24"))
 }
 
-func TestExtractNetMask_emptySubnet(t *testing.T) {
+func TestExtractNetMask_emptyMask(t *testing.T) {
     assert.Equal(t, "", ExtractNetMask("192.168.123.0/"))
 }
 
-func TestExtractNetMask_noSubnet(t *testing.T) {
+func TestExtractNetMask_noMask(t *testing.T) {
     assert.Equal(t, "", ExtractNetMask("192.168.123.0"))
 }
 

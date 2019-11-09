@@ -6,6 +6,7 @@ import (
     "github.com/urfave/cli"
     "net"
     "os"
+    "strconv"
     "strings"
 )
 
@@ -19,24 +20,35 @@ func main() {
     app.Email = "ich@weltraumschaf.de"
     app.Description = "TODO Description"
     app.Version = "1.0.0"
-    app.Action = func(c *cli.Context) error {
-        firstArg := c.Args().First()
-
-        if len(firstArg) == 0 {
-            return errors.New("No IP given!")
-        }
-
-        ip := net.ParseIP(firstArg)
-
-        fmt.Printf("Given: %q\n", ip)
-        return nil
-    }
+    app.Action = Action()
 
     err := app.Run(os.Args)
 
     if err != nil {
         fmt.Println("Error:", err.Error())
         os.Exit(1)
+    }
+}
+
+func Action() func(c *cli.Context) error {
+    return func(c *cli.Context) error {
+        firstArg := c.Args().First()
+
+        if len(firstArg) == 0 {
+            return errors.New("No IP given!")
+        }
+
+        ip := net.ParseIP(ExtractIpAddress(firstArg))
+        netMask, err := strconv.Atoi(ExtractNetMask(firstArg))
+
+        if err != nil {
+            return errors.New("Invalid netmask given!")
+        }
+
+        fmt.Printf("IP: %s\n", ip)
+        fmt.Printf("Mask: %d\n", netMask)
+
+        return nil
     }
 }
 
