@@ -1,4 +1,4 @@
-module weltraumschaf.de/ipcalc
+module weltraumschaf.de/calculon
 
 go 1.13
 
