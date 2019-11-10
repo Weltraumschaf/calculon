@@ -11,7 +11,7 @@ build:
 
 test:
 	@echo "Testing project ..."
-	go test -v
+	go test -v ./...
 
 help:
 	@echo "Execute one of these targets:"
