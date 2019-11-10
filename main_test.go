@@ -2,6 +2,7 @@ package main
 
 import (
     "github.com/stretchr/testify/assert"
+    "net"
     "testing"
 )
 
@@ -43,4 +44,39 @@ func TestExtractNetMask_emptyIp(t *testing.T) {
 
 func TestExtractNetMask_empty(t *testing.T) {
     assert.Equal(t, "", ExtractNetMask(""))
+}
+
+func TestFormatBinary(t *testing.T) {
+    result, _ := FormatBinary(net.ParseIP("192.168.123.5"))
+    assert.Equal(t, "11000000.10101000.01111011.00000101", result)
+}
+
+func TestNetmaskToOctets(t *testing.T) {
+    result, _ := NetmaskToOctets(24)
+    assert.Equal(t, "255.255.255.0", result)
+}
+
+func TestNetmaskToBinary(t *testing.T) {
+    result, _ := NetmaskToBinary(24)
+    assert.Equal(t, "11111111.11111111.11111111.00000000", result)
+}
+
+func TestNetmaskToBytes(t *testing.T) {
+    result, _ := NetmaskToBytes(24)
+
+    assert.Equal(t, []uint64{0xFF, 0xFF, 0xFF, 0x00}, result)
+}
+
+func TestNetmaskToBytes_netmaskToSmall(t *testing.T) {
+    result, err := NetmaskToBytes(0)
+
+    assert.Nil(t, result)
+    assert.NotNil(t, err)
+}
+
+func TestNetmaskToBytes_netmaskToBig(t *testing.T) {
+    result, err := NetmaskToBytes(33)
+
+    assert.Nil(t, result)
+    assert.NotNil(t, err)
 }
