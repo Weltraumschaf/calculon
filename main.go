@@ -189,3 +189,4 @@ func NetmaskToBytes(netmask int) ([]uint64, error) {
 
     return octets, nil
 }
+
