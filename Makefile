@@ -9,9 +9,9 @@ build:
 	@mkdir -p bin
 	go build -o bin/calculon main.go
 
-run:
-	@echo "Runing project ..."
-	go run main.go
+test:
+	@echo "Testing project ..."
+	go test -v
 
 help:
 	@echo "Execute one of these targets:"
