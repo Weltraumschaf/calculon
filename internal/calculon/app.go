@@ -1,8 +1,9 @@
 package calculon
 
 import (
-    "fmt"
+    "errors"
     "github.com/urfave/cli"
+    "net"
 )
 
 func Create() *cli.App {
@@ -19,6 +20,17 @@ func Create() *cli.App {
 }
 
 func Execute(c *cli.Context) error {
-    fmt.Println("Hello, World!")
-    return nil
+    firstArg := c.Args().First()
+
+    if len(firstArg) == 0 {
+        return errors.New("No IP given!")
+    }
+
+    ip, network, err := net.ParseCIDR(firstArg)
+
+    if err != nil {
+        return errors.New("Invalid netmask given!")
+    }
+
+    return PrintResult(ip, network)
 }

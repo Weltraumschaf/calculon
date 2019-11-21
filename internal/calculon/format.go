@@ -1,55 +1,14 @@
-package cmd
+package calculon
 
 import (
     "errors"
     "fmt"
-    "github.com/urfave/cli"
     "net"
-    "os"
     "strconv"
     "strings"
 )
 
-var app = cli.NewApp()
-
-func main() {
-    app.Name = "calculon"
-    app.Usage = "Tool to calculate IP stuff"
-    app.UsageText = app.Name + " 192.168.123.0/24"
-    app.Author = "Sven Strittmatter"
-    app.Email = "ich@weltraumschaf.de"
-    app.Description = "TODO Description"
-    app.Version = "1.0.0"
-    app.Action = Action()
-
-    err := app.Run(os.Args)
-
-    if err != nil {
-        fmt.Println("Error:", err.Error())
-        os.Exit(1)
-    }
-}
-
-func Action() func(c *cli.Context) error {
-    return func(c *cli.Context) error {
-        firstArg := c.Args().First()
-
-        if len(firstArg) == 0 {
-            return errors.New("No IP given!")
-        }
-
-        ip, network, err := net.ParseCIDR(firstArg)
-
-        if err != nil {
-            return errors.New("Invalid netmask given!")
-        }
-
-        return printResult(ip, network)
-    }
-}
-
-
-func printResult(ip net.IP, netmask *net.IPNet) error {
+func PrintResult(ip net.IP, netmask *net.IPNet) error {
     binaryIp, err := FormatBinary(ip)
 
     if err != nil {

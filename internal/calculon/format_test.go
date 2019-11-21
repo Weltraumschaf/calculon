@@ -1,4 +1,4 @@
-package cmd
+package calculon
 
 import (
     "github.com/stretchr/testify/assert"
