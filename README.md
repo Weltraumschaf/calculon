@@ -6,3 +6,5 @@
 - http://jodies.de/ipcalc?host=10.0.0.0&mask1=16&mask2=
 - [Exploring the landscape of Go testing frameworks](https://bmuschko.com/blog/go-testing-frameworks/)
     - [Testify](https://godoc.org/github.com/stretchr/testify)
+- http://networkbit.ch/golang-ip-address-manipulation/
+- https://github.com/golang-standards/project-layout

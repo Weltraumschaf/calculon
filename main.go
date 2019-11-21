@@ -38,46 +38,18 @@ func Action() func(c *cli.Context) error {
             return errors.New("No IP given!")
         }
 
-        ip := net.ParseIP(ExtractIpAddress(firstArg))
-        netmask, err := strconv.Atoi(ExtractNetMask(firstArg))
+        ip, network, err := net.ParseCIDR(firstArg)
 
         if err != nil {
             return errors.New("Invalid netmask given!")
         }
 
-        return printResult(ip, netmask)
+        return printResult(ip, network)
     }
 }
 
-func ExtractIpAddress(ipWithNetMask string) string {
-    if len(ipWithNetMask) == 0 {
-        return ""
-    }
 
-    position := strings.Index(ipWithNetMask, "/")
-
-    if position > -1 {
-        return ipWithNetMask[:position]
-    }
-
-    return ipWithNetMask
-}
-
-func ExtractNetMask(ipWithNetMask string) string {
-    if len(ipWithNetMask) == 0 {
-        return ""
-    }
-
-    position := strings.Index(ipWithNetMask, "/")
-
-    if position > -1 {
-        return ipWithNetMask[position+1:]
-    }
-
-    return ""
-}
-
-func printResult(ip net.IP, netmask int) error {
+func printResult(ip net.IP, netmask *net.IPNet) error {
     binaryIp, err := FormatBinary(ip)
 
     if err != nil {
@@ -86,20 +58,20 @@ func printResult(ip net.IP, netmask int) error {
 
     fmt.Printf("Address:   %s       %s\n", ip, binaryIp)
 
-    binaryNetmask, err := NetmaskToBinary(netmask)
+    //binaryNetmask, err := NetmaskToBinary(netmask)
+    //
+    //if err != nil {
+    //    return nil
+    //}
+    //
+    //decimalNetmask, err := NetmaskToOctets(netmask)
+    //
+    //if err != nil {
+    //    return nil
+    //}
 
-    if err != nil {
-        return nil
-    }
-
-    decimalNetmask, err := NetmaskToOctets(netmask)
-
-    if err != nil {
-        return nil
-    }
-
-    fmt.Printf("Netmask:   %s = %d  %s\n",
-        decimalNetmask, netmask, binaryNetmask)
+    //fmt.Printf("Netmask:   %s = %d  %s\n",
+    //    decimalNetmask, netmask, binaryNetmask)
     fmt.Printf("Wildcard:  \n")
     fmt.Printf("Network:   \n")
     fmt.Printf("Broadcast: \n")
@@ -190,3 +162,7 @@ func NetmaskToBytes(netmask int) ([]uint64, error) {
     return octets, nil
 }
 
+func FormatByteToBitString(input byte) string {
+    binary := strconv.FormatUint(uint64(input), 2)
+    return fmt.Sprintf("%08s", binary)
+}
