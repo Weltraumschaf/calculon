@@ -4,7 +4,7 @@ import (
     "fmt"
     "github.com/urfave/cli"
     "os"
-    "weltraumschaf.de/calculon/internal/app/calculon"
+    "weltraumschaf.de/calculon/internal/calculon"
 )
 
 var app = cli.NewApp()
