@@ -4,6 +4,7 @@ import (
     "fmt"
     "github.com/urfave/cli"
     "os"
+    "weltraumschaf.de/calculon/internal/app/calculon"
 )
 
 var app = cli.NewApp()
@@ -16,7 +17,7 @@ func main() {
     app.Email = "ich@weltraumschaf.de"
     app.Description = "TODO Description"
     app.Version = "1.0.0"
-    app.Action = Action
+    app.Action = calculon.Execute
 
     err := app.Run(os.Args)
 
@@ -26,7 +27,3 @@ func main() {
     }
 }
 
-func Action(c *cli.Context) error {
-    fmt.Println("Hello, World!")
-    return nil
-}
