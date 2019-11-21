@@ -16,7 +16,7 @@ func main() {
     app.Email = "ich@weltraumschaf.de"
     app.Description = "TODO Description"
     app.Version = "1.0.0"
-    app.Action = Action()
+    app.Action = Action
 
     err := app.Run(os.Args)
 
@@ -26,9 +26,7 @@ func main() {
     }
 }
 
-func Action() func(c *cli.Context) error {
-    return func(c *cli.Context) error {
-        fmt.Println("Hello, World!")
-        return nil
-    }
+func Action(c *cli.Context) error {
+    fmt.Println("Hello, World!")
+    return nil
 }
