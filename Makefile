@@ -7,7 +7,7 @@ clean:
 build:
 	@echo "Building project ..."
 	@mkdir -p bin
-	go build -o bin/calculon main.go
+	go build -o bin/calculon cmd/calculon/main.go
 
 test:
 	@echo "Testing project ..."
