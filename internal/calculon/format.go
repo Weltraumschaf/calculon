@@ -12,12 +12,12 @@ func FormatByteAsBits(input byte) string {
     return fmt.Sprintf("%08s", binary)
 }
 
-func FormatIpAsDottedBits(ip net.IP) (string, error) {
+func FormatIpAsDottedBits(ip net.IP) string {
     var result []string
 
     for _, b := range ip.To4() {
         result = append(result, FormatByteAsBits(b))
     }
 
-    return strings.Join(result, "."), nil
+    return strings.Join(result, ".")
 }

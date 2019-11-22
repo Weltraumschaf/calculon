@@ -24,9 +24,9 @@ func TestFormatByteAsBits(t *testing.T) {
 }
 
 func TestFormatIpAsDottedBits(t *testing.T) {
-    result, _ := FormatIpAsDottedBits(net.ParseIP("192.168.1.1"))
+    result := FormatIpAsDottedBits(net.ParseIP("192.168.1.1"))
     assert.Equal(t, "11000000.10101000.00000001.00000001", result)
 
-    result, _ = FormatIpAsDottedBits(net.ParseIP("1.2.3.4"))
+    result = FormatIpAsDottedBits(net.ParseIP("1.2.3.4"))
     assert.Equal(t, "00000001.00000010.00000011.00000100", result)
 }
