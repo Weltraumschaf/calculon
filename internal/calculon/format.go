@@ -26,6 +26,6 @@ func FormatMaskAsDottedBits(masks net.IPMask) string {
     return ""
 }
 
-func FormatMaskAsDottedDeciaml(masks net.IPMask) string {
+func FormatMaskAsDottedDecimal(masks net.IPMask) string {
     return ""
 }

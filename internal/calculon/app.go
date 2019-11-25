@@ -53,7 +53,7 @@ func printAddress(ip net.IP) {
 }
 
 func printNetmask(network *net.IPNet) {
-    netmask := FormatMaskAsDottedDeciaml(network.Mask)
+    netmask := FormatMaskAsDottedDecimal(network.Mask)
     decimalNetmask, _ := network.Mask.Size()
     binaryNetmask := FormatMaskAsDottedBits(network.Mask)
     fmt.Printf("Netmask:   %s = %d  %s\n", netmask, decimalNetmask, binaryNetmask)
