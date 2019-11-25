@@ -33,19 +33,52 @@ func Execute(c *cli.Context) error {
         return errors.New("Invalid netmask given!")
     }
 
-    return printResult(ip, network)
+    printResult(ip, network)
+    return nil
 }
 
-func printResult(ip net.IP, network *net.IPNet) error {
-    fmt.Printf("Address:   %s       %s\n", ip, FormatIpAsDottedBits(ip))
+func printResult(ip net.IP, network *net.IPNet) {
+    printAddress(ip)
+    printNetmask(network)
+    printWildcard()
+    printNetwork()
+    printBroadcast()
+    printHostMin()
+    printHostMax()
+    printHostsPerNet()
+}
 
-    //fmt.Printf("Netmask:   %s = %d  %s\n",
-    //    decimalNetmask, netmask, binaryNetmask)
+func printAddress(ip net.IP) {
+    fmt.Printf("Address:   %s       %s\n", ip, FormatIpAsDottedBits(ip))
+}
+
+func printNetmask(network *net.IPNet) {
+    netmask := FormatMaskAsDottedDeciaml(network.Mask)
+    decimalNetmask, _ := network.Mask.Size()
+    binaryNetmask := FormatMaskAsDottedBits(network.Mask)
+    fmt.Printf("Netmask:   %s = %d  %s\n", netmask, decimalNetmask, binaryNetmask)
+}
+
+func printWildcard() {
     fmt.Printf("Wildcard:  \n")
+}
+
+func printNetwork() {
     fmt.Printf("Network:   \n")
+}
+
+func printBroadcast() {
     fmt.Printf("Broadcast: \n")
+}
+
+func printHostMin() {
     fmt.Printf("HostMin:   \n")
+}
+
+func printHostMax() {
     fmt.Printf("HostMax:   \n")
+}
+
+func printHostsPerNet() {
     fmt.Printf("Hosts/Net: \n")
-    return nil
 }
