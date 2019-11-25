@@ -30,3 +30,21 @@ func TestFormatIpAsDottedBits(t *testing.T) {
     result = FormatIpAsDottedBits(net.ParseIP("1.2.3.4"))
     assert.Equal(t, "00000001.00000010.00000011.00000100", result)
 }
+
+func TestFormatMaskAsDottedDecimal(t *testing.T) {
+    _, network, _ := net.ParseCIDR("192.168.1.1/24")
+    result := FormatMaskAsDottedDecimal(network.Mask)
+    assert.Equal(t, "255.255.255.0", result)
+
+    _, network, _ = net.ParseCIDR("192.168.1.1/18")
+    result = FormatMaskAsDottedDecimal(network.Mask)
+    assert.Equal(t, "255.255.192.0", result)
+
+    _, network, _ = net.ParseCIDR("192.168.1.1/16")
+    result = FormatMaskAsDottedDecimal(network.Mask)
+    assert.Equal(t, "255.255.0.0", result)
+
+    _, network, _ = net.ParseCIDR("192.168.1.1/8")
+    result = FormatMaskAsDottedDecimal(network.Mask)
+    assert.Equal(t, "255.0.0.0", result)
+}
