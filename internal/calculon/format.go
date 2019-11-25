@@ -21,3 +21,11 @@ func FormatIpAsDottedBits(ip net.IP) string {
 
     return strings.Join(result, ".")
 }
+
+func FormatMaskAsDottedBits(masks net.IPMask) string {
+    return ""
+}
+
+func FormatMaskAsDottedDeciaml(masks net.IPMask) string {
+    return ""
+}
