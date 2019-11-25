@@ -18,7 +18,13 @@ func FormatIpAsDottedBits(ip net.IP) string {
 }
 
 func FormatMaskAsDottedBits(mask net.IPMask) string {
-    return ""
+    var result []string
+
+    for _, b := range mask {
+        result = append(result, FormatByteAsBits(b))
+    }
+
+    return joinBytes(result)
 }
 
 func FormatMaskAsDottedDecimal(mask net.IPMask) string {
@@ -27,6 +33,7 @@ func FormatMaskAsDottedDecimal(mask net.IPMask) string {
     for _, b := range mask {
         result = append(result, fmt.Sprintf("%d", b))
     }
+
     return joinBytes(result)
 }
 

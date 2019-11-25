@@ -6,6 +6,11 @@ import (
     "testing"
 )
 
+func createNetmask(cidr string) net.IPMask {
+    _, network, _ := net.ParseCIDR(cidr)
+    return network.Mask
+}
+
 func TestFormatByteAsBits(t *testing.T) {
     assert.Equal(t, "00000000", FormatByteAsBits(0x00))
     assert.Equal(t, "00000001", FormatByteAsBits(0x01))
@@ -31,20 +36,30 @@ func TestFormatIpAsDottedBits(t *testing.T) {
     assert.Equal(t, "00000001.00000010.00000011.00000100", result)
 }
 
+func TestFormatMaskAsDottedBits(t *testing.T) {
+    result := FormatMaskAsDottedBits(createNetmask("192.168.1.1/24"))
+    assert.Equal(t, "11111111.11111111.11111111.00000000", result)
+
+    result = FormatMaskAsDottedBits(createNetmask("192.168.1.1/18"))
+    assert.Equal(t, "11111111.11111111.11000000.00000000", result)
+
+    result = FormatMaskAsDottedBits(createNetmask("192.168.1.1/16"))
+    assert.Equal(t, "11111111.11111111.00000000.00000000", result)
+
+    result = FormatMaskAsDottedBits(createNetmask("192.168.1.1/8"))
+    assert.Equal(t, "11111111.00000000.00000000.00000000", result)
+}
+
 func TestFormatMaskAsDottedDecimal(t *testing.T) {
-    _, network, _ := net.ParseCIDR("192.168.1.1/24")
-    result := FormatMaskAsDottedDecimal(network.Mask)
+    result := FormatMaskAsDottedDecimal(createNetmask("192.168.1.1/24"))
     assert.Equal(t, "255.255.255.0", result)
 
-    _, network, _ = net.ParseCIDR("192.168.1.1/18")
-    result = FormatMaskAsDottedDecimal(network.Mask)
+    result = FormatMaskAsDottedDecimal(createNetmask("192.168.1.1/18"))
     assert.Equal(t, "255.255.192.0", result)
 
-    _, network, _ = net.ParseCIDR("192.168.1.1/16")
-    result = FormatMaskAsDottedDecimal(network.Mask)
+    result = FormatMaskAsDottedDecimal(createNetmask("192.168.1.1/16"))
     assert.Equal(t, "255.255.0.0", result)
 
-    _, network, _ = net.ParseCIDR("192.168.1.1/8")
-    result = FormatMaskAsDottedDecimal(network.Mask)
+    result = FormatMaskAsDottedDecimal(createNetmask("192.168.1.1/8"))
     assert.Equal(t, "255.0.0.0", result)
 }
