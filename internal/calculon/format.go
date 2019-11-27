@@ -18,13 +18,7 @@ func FormatIpAsDottedBits(ip net.IP) string {
 }
 
 func FormatMaskAsDottedBits(mask net.IPMask) string {
-    var result []string
-
-    for _, b := range mask {
-        result = append(result, FormatByteAsBits(b))
-    }
-
-    return joinBytes(result)
+    return formatBytesAsBits(mask)
 }
 
 func FormatMaskAsDottedDecimal(mask net.IPMask) string {
@@ -38,16 +32,30 @@ func FormatMaskAsDottedDecimal(mask net.IPMask) string {
 }
 
 func FormatWildcardAsDottedBits(ip net.IP) string {
-    return ""
+    return formatBytesAsBits(ip.To4())
 }
 
-func FormatWildcardAsDottedDecimal(ip net.IP) string {
-    return ""
+func formatBytesAsBits(bytes []byte) string {
+    var result []string
+
+    for _, b := range bytes {
+        result = append(result, FormatByteAsBits(b))
+    }
+
+    return joinBytes(result)
 }
 
 func FormatByteAsBits(input byte) string {
     binary := strconv.FormatUint(uint64(input), 2)
     return fmt.Sprintf("%08s", binary)
+}
+
+func PadFirstColumn(input interface{}) string {
+    return fmt.Sprintf("%-11s", input)
+}
+
+func PadSecondColumn(input interface{}) string {
+    return fmt.Sprintf("%-22s", input)
 }
 
 func joinBytes(result []string) string {

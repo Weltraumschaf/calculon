@@ -63,3 +63,27 @@ func TestFormatMaskAsDottedDecimal(t *testing.T) {
     result = FormatMaskAsDottedDecimal(createNetmask("192.168.1.1/8"))
     assert.Equal(t, "255.0.0.0", result)
 }
+
+func TestFormatWildcardAsDottedBits(t *testing.T) {
+    assert.Equal(t,
+        "00000000.00000000.00000000.11111111",
+        FormatWildcardAsDottedBits(net.ParseIP("0.0.0.255")))
+    assert.Equal(t,
+        "00000000.00000000.11111111.11111111",
+        FormatWildcardAsDottedBits(net.ParseIP("0.0.255.255")))
+    assert.Equal(t,
+        "00000000.11111111.11111111.11111111",
+        FormatWildcardAsDottedBits(net.ParseIP("0.255.255.255")))
+}
+
+func TestPadFirstColumn(t *testing.T) {
+    assert.Equal(t,
+        "foo        ",
+        PadFirstColumn("foo"))
+}
+
+func TestPadSecondColumn(t *testing.T) {
+    assert.Equal(t,
+        "foo                   ",
+        PadSecondColumn("foo"))
+}

@@ -49,21 +49,28 @@ func printResult(ip net.IP, network *net.IPNet) {
 }
 
 func printAddress(ip net.IP) {
-    fmt.Printf("Address:   %s       %s\n", ip, FormatIpAsDottedBits(ip))
+    fmt.Println(
+        PadFirstColumn("Address:"),
+        PadSecondColumn(ip),
+        FormatIpAsDottedBits(ip))
 }
 
 func printNetmask(mask net.IPMask) {
     netmask := FormatMaskAsDottedDecimal(mask)
     decimalNetmask, _ := mask.Size()
-    binaryNetmask := FormatMaskAsDottedBits(mask)
-    fmt.Printf("Netmask:   %s = %d  %s\n", netmask, decimalNetmask, binaryNetmask)
+    fmt.Println(
+        PadFirstColumn("Netmask:"),
+        PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask)),
+        FormatMaskAsDottedBits(mask))
 }
 
 func printWildcard(mask net.IPMask) {
     wildcard := DeriveWildcard(mask)
-    decimalWildcard := FormatWildcardAsDottedDecimal(wildcard)
-    binaryWildcard := FormatWildcardAsDottedBits(wildcard)
-    fmt.Printf("Wildcard:  %s       %s\n", decimalWildcard, binaryWildcard)
+
+    fmt.Println(
+        PadFirstColumn("Wildcard:"),
+        PadSecondColumn(wildcard), 
+        FormatWildcardAsDottedBits(wildcard))
 }
 
 func printNetwork() {
