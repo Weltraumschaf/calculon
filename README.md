@@ -22,6 +22,13 @@ Hosts/Net: 254
 
 This is only for my personal training to get used to [go-lang][go-lang]. You can use this project, but you should not rely on it or any maintenance!
 
+## Build and Run
+
+```bash
+make clean && make
+./bin/calculon 192.168.123.5/24
+```
+
 ## Links
 
 - https://itnext.io/how-to-create-your-own-cli-with-golang-3c50727ac608
