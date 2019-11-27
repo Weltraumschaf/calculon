@@ -37,6 +37,14 @@ func FormatMaskAsDottedDecimal(mask net.IPMask) string {
     return joinBytes(result)
 }
 
+func FormatWildcardAsDottedBits(ip net.IP) string {
+    return ""
+}
+
+func FormatWildcardAsDottedDecimal(ip net.IP) string {
+    return ""
+}
+
 func FormatByteAsBits(input byte) string {
     binary := strconv.FormatUint(uint64(input), 2)
     return fmt.Sprintf("%08s", binary)

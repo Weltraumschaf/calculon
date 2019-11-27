@@ -39,8 +39,8 @@ func Execute(c *cli.Context) error {
 
 func printResult(ip net.IP, network *net.IPNet) {
     printAddress(ip)
-    printNetmask(network)
-    printWildcard()
+    printNetmask(network.Mask)
+    printWildcard(network.Mask)
     printNetwork()
     printBroadcast()
     printHostMin()
@@ -52,15 +52,18 @@ func printAddress(ip net.IP) {
     fmt.Printf("Address:   %s       %s\n", ip, FormatIpAsDottedBits(ip))
 }
 
-func printNetmask(network *net.IPNet) {
-    netmask := FormatMaskAsDottedDecimal(network.Mask)
-    decimalNetmask, _ := network.Mask.Size()
-    binaryNetmask := FormatMaskAsDottedBits(network.Mask)
+func printNetmask(mask net.IPMask) {
+    netmask := FormatMaskAsDottedDecimal(mask)
+    decimalNetmask, _ := mask.Size()
+    binaryNetmask := FormatMaskAsDottedBits(mask)
     fmt.Printf("Netmask:   %s = %d  %s\n", netmask, decimalNetmask, binaryNetmask)
 }
 
-func printWildcard() {
-    fmt.Printf("Wildcard:  \n")
+func printWildcard(mask net.IPMask) {
+    wildcard := DeriveWildcard(mask)
+    decimalWildcard := FormatWildcardAsDottedDecimal(wildcard)
+    binaryWildcard := FormatWildcardAsDottedBits(wildcard)
+    fmt.Printf("Wildcard:  %s       %s\n", decimalWildcard, binaryWildcard)
 }
 
 func printNetwork() {
