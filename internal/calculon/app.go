@@ -14,7 +14,7 @@ func Create() *cli.App {
     app.UsageText = app.Name + " 192.168.123.0/24"
     app.Author = "Sven Strittmatter"
     app.Email = "ich@weltraumschaf.de"
-    app.Description = "TODO Description"
+    app.Description = "Simple IPv4 calculator."
     app.Version = "1.0.0"
     app.Action = Execute
     return app
