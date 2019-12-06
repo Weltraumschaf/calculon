@@ -74,21 +74,26 @@ func printWildcard(mask net.IPMask) {
 }
 
 func printNetwork() {
-    fmt.Printf("Network:   \n")
+    // TODO Implement print network.
+    fmt.Printf("Network:   n/a\n")
 }
 
 func printBroadcast() {
-    fmt.Printf("Broadcast: \n")
+    // TODO Implement print broadcast.
+    fmt.Printf("Broadcast: n/a\n")
 }
 
 func printHostMin() {
-    fmt.Printf("HostMin:   \n")
+    // TODO Implement print host min.
+    fmt.Printf("HostMin:   n/a\n")
 }
 
 func printHostMax() {
-    fmt.Printf("HostMax:   \n")
+    // TODO Implement print host max.
+    fmt.Printf("HostMax:   n/a\n")
 }
 
 func printHostsPerNet() {
-    fmt.Printf("Hosts/Net: \n")
+    // TODO Implement print hosts/net.
+    fmt.Printf("Hosts/Net: n/a\n")
 }
