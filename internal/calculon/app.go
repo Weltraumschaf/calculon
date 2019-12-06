@@ -40,6 +40,7 @@ func Execute(c *cli.Context) error {
 func printResult(ip net.IP, network *net.IPNet) {
     printAddress(ip)
     printNetmask(network.Mask)
+    fmt.Println("=>")
     printWildcard(network.Mask)
     printNetwork(network)
     printBroadcast()
@@ -74,10 +75,11 @@ func printWildcard(mask net.IPMask) {
 }
 
 func printNetwork(network *net.IPNet) {
-    // TODO Implement print network.
+    decimalNetmask, _ := network.Mask.Size()
     fmt.Println(
         PadFirstColumn("Network:"),
-        "n/a")
+        PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask)),
+        FormatIpAsDottedBits(network.IP))
 }
 
 func printBroadcast() {
