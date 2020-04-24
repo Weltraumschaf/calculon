@@ -1,5 +1,7 @@
 # Calculon
 
+![This project is actively maintained!](https://img.shields.io/badge/Development-active-green?style=for-the-badge)
+
 [![Build Status](https://travis-ci.com/Weltraumschaf/calculon.svg?branch=master)](https://travis-ci.com/Weltraumschaf/calculon)
 
 This is a reimplementation of the [IPv4 calculator][ipcalc] in [go-lang][go-lang] as CLI tool.
