@@ -40,8 +40,8 @@ func Execute(c *cli.Context) error {
 func printResult(ip net.IP, network *net.IPNet) {
 	printAddress(ip)
 	printNetmask(network.Mask)
-	fmt.Println("=>")
 	printWildcard(network.Mask)
+	fmt.Println("=>")
 	printNetwork(network)
 	printBroadcast()
 	printHostMin()
@@ -52,8 +52,8 @@ func printResult(ip net.IP, network *net.IPNet) {
 func printAddress(ip net.IP) {
 	fmt.Println(
 		PadFirstColumn("Address:"),
-		PadSecondColumn(ip),
-		FormatIpAsDottedBits(ip))
+		Blue(PadSecondColumn(ip.String())),
+		Yellow(FormatIpAsDottedBits(ip)))
 }
 
 func printNetmask(mask net.IPMask) {
@@ -61,8 +61,8 @@ func printNetmask(mask net.IPMask) {
 	decimalNetmask, _ := mask.Size()
 	fmt.Println(
 		PadFirstColumn("Netmask:"),
-		PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask)),
-		FormatMaskAsDottedBits(mask))
+		Blue(PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask))),
+		Red(FormatMaskAsDottedBits(mask)))
 }
 
 func printWildcard(mask net.IPMask) {
@@ -70,16 +70,16 @@ func printWildcard(mask net.IPMask) {
 
 	fmt.Println(
 		PadFirstColumn("Wildcard:"),
-		PadSecondColumn(wildcard),
-		FormatWildcardAsDottedBits(wildcard))
+		Blue(PadSecondColumn(wildcard.String())),
+		Yellow(FormatWildcardAsDottedBits(wildcard)))
 }
 
 func printNetwork(network *net.IPNet) {
 	decimalNetmask, _ := network.Mask.Size()
 	fmt.Println(
 		PadFirstColumn("Network:"),
-		PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask)),
-		FormatIpAsDottedBits(network.IP))
+		Blue(PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask))),
+		Yellow(FormatIpAsDottedBits(network.IP)))
 }
 
 func printBroadcast() {
