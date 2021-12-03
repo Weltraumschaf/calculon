@@ -86,26 +86,30 @@ func printBroadcast() {
 	// TODO Implement print broadcast.
 	fmt.Println(
 		PadFirstColumn("Broadcast:"),
-		"n/a")
+		Blue(PadSecondColumn("n/a")),
+		Yellow("n/a"))
 }
 
 func printHostMin() {
 	// TODO Implement print host min.
 	fmt.Println(
 		PadFirstColumn("Host min.:"),
-		"n/a")
+		Blue(PadSecondColumn("n/a")),
+		Yellow("n/a"))
 }
 
 func printHostMax() {
 	// TODO Implement print host max.
 	fmt.Println(
 		PadFirstColumn("Host max.:"),
-		"n/a")
+		Blue(PadSecondColumn("n/a")),
+		Yellow("n/a"))
 }
 
 func printHostsPerNet() {
 	// TODO Implement print hosts/net.
 	fmt.Println(
 		PadFirstColumn("Hosts/Net:"),
-		"n/a")
+		Blue(PadSecondColumn("n/a")),
+		Yellow("n/a"))
 }
