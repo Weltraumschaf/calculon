@@ -43,8 +43,8 @@ func printResult(ip net.IP, network *net.IPNet) {
 	printWildcard(network.Mask)
 	fmt.Println("=>")
 	printNetwork(network)
-	printHostMin()
-	printHostMax()
+	printHostMin(network)
+	printHostMax(ip, network)
 	printBroadcast(ip, network)
 	printHostsPerNet()
 }
@@ -90,20 +90,20 @@ func printBroadcast(ip net.IP, network *net.IPNet) {
 		Yellow(FormatIpAsDottedBits(broadcast)))
 }
 
-func printHostMin() {
-	// TODO Implement print host min.
+func printHostMin(network *net.IPNet) {
+	hostMin := HostMin(network)
 	fmt.Println(
 		PadFirstColumn("Host min.:"),
-		Blue(PadSecondColumn("n/a")),
-		Yellow("n/a"))
+		Blue(PadSecondColumn(hostMin)),
+		Yellow(FormatIpAsDottedBits(hostMin)))
 }
 
-func printHostMax() {
-	// TODO Implement print host max.
+func printHostMax(ip net.IP, network *net.IPNet) {
+	hostMax := HostMax(ip, network)
 	fmt.Println(
 		PadFirstColumn("Host max.:"),
-		Blue(PadSecondColumn("n/a")),
-		Yellow("n/a"))
+		Blue(PadSecondColumn(hostMax)),
+		Yellow(FormatIpAsDottedBits(hostMax)))
 }
 
 func printHostsPerNet() {
