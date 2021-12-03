@@ -47,6 +47,10 @@ func printResult(ip net.IP, network *net.IPNet) {
 	printHostMax(ip, network)
 	printBroadcast(ip, network)
 	printHostsPerNet(ip, network)
+
+	if ip.IsPrivate() {
+		fmt.Println("Private Internet")
+	}
 }
 
 func printAddress(ip net.IP) {
@@ -108,7 +112,7 @@ func printHostMax(ip net.IP, network *net.IPNet) {
 
 func printHostsPerNet(ip net.IP, network *net.IPNet) {
 	number := HostsPerNetwork(ip, network)
-	fmt.Println(
+	fmt.Print(
 		PadFirstColumn("Hosts/Net:"),
 		Blue(PadSecondColumn(fmt.Sprintf("%d", number))))
 }
