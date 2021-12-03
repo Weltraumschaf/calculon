@@ -33,7 +33,7 @@ func Execute(c *cli.Context) error {
 		return errors.New("Invalid netmask given!")
 	}
 
-	printResult(ip, network)
+	printResult(ip.To4(), network)
 	return nil
 }
 
@@ -43,9 +43,9 @@ func printResult(ip net.IP, network *net.IPNet) {
 	printWildcard(network.Mask)
 	fmt.Println("=>")
 	printNetwork(network)
-	printBroadcast()
 	printHostMin()
 	printHostMax()
+	printBroadcast(ip, network)
 	printHostsPerNet()
 }
 
@@ -82,12 +82,12 @@ func printNetwork(network *net.IPNet) {
 		Yellow(FormatIpAsDottedBits(network.IP)))
 }
 
-func printBroadcast() {
-	// TODO Implement print broadcast.
+func printBroadcast(ip net.IP, network *net.IPNet) {
+	broadcast := DeriveBroadCast(ip, network)
 	fmt.Println(
 		PadFirstColumn("Broadcast:"),
-		Blue(PadSecondColumn("n/a")),
-		Yellow("n/a"))
+		Blue(PadSecondColumn(broadcast.String())),
+		Yellow(FormatIpAsDottedBits(broadcast)))
 }
 
 func printHostMin() {

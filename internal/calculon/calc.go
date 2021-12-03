@@ -2,6 +2,17 @@ package calculon
 
 import "net"
 
+func DeriveBroadCast(ip net.IP, network *net.IPNet) net.IP {
+	broadcast := net.IP(make([]byte, 4))
+	mask := network.Mask
+
+	for i := range ip {
+		broadcast[i] = ip[i] | ^mask[i]
+	}
+
+	return broadcast
+}
+
 func DeriveWildcard(mask net.IPMask) net.IP {
 	var result []byte
 
