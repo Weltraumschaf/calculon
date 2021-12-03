@@ -27,6 +27,20 @@ func DeriveWildcard(mask net.IPMask) net.IP {
 	return nil
 }
 
+func HostMin(network *net.IPNet) net.IP {
+	ip := network.IP
+	b := ip[3]
+	ip[3] = b + 1
+	return ip
+}
+
+func HostMax(ip net.IP, network *net.IPNet) net.IP {
+	broadcast := DeriveBroadCast(ip, network)
+	b := broadcast[3]
+	broadcast[3] = b - 1
+	return broadcast
+}
+
 func InvertByte(input byte) byte {
 	return 0xFF - input
 }
