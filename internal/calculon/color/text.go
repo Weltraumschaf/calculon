@@ -1,10 +1,12 @@
 package color
 
+import "weltraumschaf.de/calculon/internal/calculon/config"
+
 type Color string
 
 const (
-	reset Color = "\033[0m"
-	red         = "\033[31m"
+	reset  Color = "\033[0m"
+	red          = "\033[31m"
 	green        = "\033[32m"
 	yellow       = "\033[33m"
 	blue         = "\033[34m"
@@ -41,6 +43,13 @@ func White(str string) string {
 	return colorize(white, str)
 }
 
+
 func colorize(color Color, input string) string {
-	return string(color) + input + string(reset)
+	var useColors = config.ApplicationOptions().IsColor()
+
+	if useColors {
+		return string(color) + input + string(reset)
+	}
+
+	return input
 }

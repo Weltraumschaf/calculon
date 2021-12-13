@@ -7,29 +7,44 @@ import (
 	"net"
 	"weltraumschaf.de/calculon/internal/calculon/calc"
 	"weltraumschaf.de/calculon/internal/calculon/color"
+	"weltraumschaf.de/calculon/internal/calculon/config"
 	"weltraumschaf.de/calculon/internal/calculon/format"
 )
 
 func Create() *cli.App {
 	const name = "calculon"
 	app := &cli.App{
-		Name:      name,
-		Usage:     "Tool to calculate IP stuff",
-		UsageText: name + " 192.168.123.0/24",
+		Name:        name,
+		Usage:       "Tool to calculate IP stuff",
+		UsageText:   name + " 192.168.123.0/24",
 		Description: "Simple IPv4 calculator.",
 		Version:     "1.0.0",
 		Authors: []*cli.Author{
 			{
-				Name: "Sven Strittmatter",
-				Email:  "ich@weltraumschaf.de",
+				Name:  "Sven Strittmatter",
+				Email: "ich@weltraumschaf.de",
 			},
 		},
-		Action:      Execute,
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "nocolor",
+				Aliases: []string{"n"},
+				Usage:   "Don't display ANSI color codes.",
+			},
+			&cli.BoolFlag{
+				Name:    "color",
+				Aliases: []string{"c"},
+				Usage:   "Display ANSI color codes (default).",
+				Value:   true,
+			},
+		},
+		Action: Execute,
 	}
 	return app
 }
 
 func Execute(c *cli.Context) error {
+	config.ApplicationOptions().InitOptions(c)
 	firstArg := c.Args().First()
 
 	if len(firstArg) == 0 {
