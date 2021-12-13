@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/urfave/cli"
 	"net"
+	"weltraumschaf.de/calculon/internal/calculon/calc"
 	color "weltraumschaf.de/calculon/internal/calculon/color"
 )
 
@@ -71,7 +72,7 @@ func printNetmask(mask net.IPMask) {
 }
 
 func printWildcard(mask net.IPMask) {
-	wildcard := DeriveWildcard(mask)
+	wildcard := calc.DeriveWildcard(mask)
 
 	fmt.Println(
 		PadFirstColumn("Wildcard:"),
@@ -88,7 +89,7 @@ func printNetwork(network *net.IPNet) {
 }
 
 func printBroadcast(ip net.IP, network *net.IPNet) {
-	broadcast := DeriveBroadCast(ip, network)
+	broadcast := calc.DeriveBroadCast(ip, network)
 	fmt.Println(
 		PadFirstColumn("Broadcast:"),
 		color.Blue(PadSecondColumn(broadcast.String())),
@@ -96,7 +97,7 @@ func printBroadcast(ip net.IP, network *net.IPNet) {
 }
 
 func printHostMin(network *net.IPNet) {
-	hostMin := HostMin(network)
+	hostMin := calc.HostMin(network)
 	fmt.Println(
 		PadFirstColumn("HostMin:"),
 		color.Blue(PadSecondColumn(hostMin)),
@@ -104,7 +105,7 @@ func printHostMin(network *net.IPNet) {
 }
 
 func printHostMax(ip net.IP, network *net.IPNet) {
-	hostMax := HostMax(ip, network)
+	hostMax := calc.HostMax(ip, network)
 	fmt.Println(
 		PadFirstColumn("HostMax:"),
 		color.Blue(PadSecondColumn(hostMax)),
@@ -112,7 +113,7 @@ func printHostMax(ip net.IP, network *net.IPNet) {
 }
 
 func printHostsPerNet(ip net.IP, network *net.IPNet) {
-	number := HostsPerNetwork(ip, network)
+	number := calc.HostsPerNetwork(ip, network)
 	fmt.Print(
 		PadFirstColumn("Hosts/Net:"),
 		color.Blue(PadSecondColumn(fmt.Sprintf("%d", number))))

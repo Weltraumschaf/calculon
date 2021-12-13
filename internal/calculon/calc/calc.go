@@ -1,4 +1,4 @@
-package calculon
+package calc
 
 import (
 	"encoding/binary"

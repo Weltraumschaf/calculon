@@ -1,10 +1,15 @@
-package calculon
+package calc
 
 import (
 	"github.com/stretchr/testify/assert"
 	"net"
 	"testing"
 )
+
+func createNetmask(cidr string) net.IPMask {
+	_, network, _ := net.ParseCIDR(cidr)
+	return network.Mask
+}
 
 func TestDeriveWildcard(t *testing.T) {
 	result := DeriveWildcard(createNetmask("0.0.0.0/24"))
