@@ -21,11 +21,13 @@ fi
 
 mkdir -p "${COVERAGE_DIR}"
 
+# Create a coverage file for each package
 for pkg in ${PKG_LIST}; do
     go test -covermode=count -coverprofile \
         "${COVERAGE_DIR}/${pkg##*/}.cov" "${pkg}"
 done
 
+# Merge the coverage profile files
 echo 'mode: count' > "${COVERAGE_DIR}/coverage.cov"
 tail -q -n +2 "${COVERAGE_DIR}"/*.cov >> "${COVERAGE_DIR}/coverage.cov"
 

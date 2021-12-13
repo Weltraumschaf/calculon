@@ -9,12 +9,13 @@ all: build
 PROJECT_DIR 	= $(shell pwd)
 BIN_DIR			= $(PROJECT_DIR)/bin
 TOOLS_DIR		= $(PROJECT_DIR)/tools
+COVERAGE_DIR 	= $(PROJECT_DIR)/coverage
 
 all: build
 
 .PHONY: clean ## Clean the project.
 clean:
-	rm -rfv $(BIN_DIR)
+	rm -rfv $(BIN_DIR) $(COVERAGE_DIR)
 
 .PHONY: build
 build: ## Build the project
