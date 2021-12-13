@@ -8,6 +8,7 @@ all: build
 
 PROJECT_DIR 	= $(shell pwd)
 BIN_DIR			= $(PROJECT_DIR)/bin
+TOOLS_DIR		= $(PROJECT_DIR)/tools
 
 all: build
 
@@ -32,6 +33,12 @@ run: ## Run the project's binary.
 test: ## Run the unit tests.
 	@echo "Testing project ..."
 	go test -v ./...
+
+cover: ## Generate code coverage report
+	$(TOOLS_DIR)/coverage.sh $(COVERAGE_DIR)
+
+cover-html: ## Generate HTML code coverage report
+	$(TOOLS_DIR)/coverage.sh $(COVERAGE_DIR) html;
 
 .PHONY: help
 help: ## Display this help screen
