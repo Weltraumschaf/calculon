@@ -1,4 +1,4 @@
-package calculon
+package format
 
 import (
 	"fmt"
@@ -7,21 +7,21 @@ import (
 	"strings"
 )
 
-func FormatIpAsDottedBits(ip net.IP) string {
+func IpAsDottedBits(ip net.IP) string {
 	var result []string
 
 	for _, b := range ip.To4() {
-		result = append(result, FormatByteAsBits(b))
+		result = append(result, ByteAsBits(b))
 	}
 
 	return joinBytes(result)
 }
 
-func FormatMaskAsDottedBits(mask net.IPMask) string {
-	return formatBytesAsBits(mask)
+func MaskAsDottedBits(mask net.IPMask) string {
+	return bytesAsBits(mask)
 }
 
-func FormatMaskAsDottedDecimal(mask net.IPMask) string {
+func MaskAsDottedDecimal(mask net.IPMask) string {
 	var result []string
 
 	for _, b := range mask {
@@ -31,21 +31,21 @@ func FormatMaskAsDottedDecimal(mask net.IPMask) string {
 	return joinBytes(result)
 }
 
-func FormatWildcardAsDottedBits(ip net.IP) string {
-	return formatBytesAsBits(ip.To4())
+func WildcardAsDottedBits(ip net.IP) string {
+	return bytesAsBits(ip.To4())
 }
 
-func formatBytesAsBits(bytes []byte) string {
+func bytesAsBits(bytes []byte) string {
 	var result []string
 
 	for _, b := range bytes {
-		result = append(result, FormatByteAsBits(b))
+		result = append(result, ByteAsBits(b))
 	}
 
 	return joinBytes(result)
 }
 
-func FormatByteAsBits(input byte) string {
+func ByteAsBits(input byte) string {
 	binary := strconv.FormatUint(uint64(input), 2)
 	return fmt.Sprintf("%08s", binary)
 }

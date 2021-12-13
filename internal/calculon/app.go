@@ -6,7 +6,8 @@ import (
 	"github.com/urfave/cli"
 	"net"
 	"weltraumschaf.de/calculon/internal/calculon/calc"
-	color "weltraumschaf.de/calculon/internal/calculon/color"
+	"weltraumschaf.de/calculon/internal/calculon/color"
+	"weltraumschaf.de/calculon/internal/calculon/format"
 )
 
 func Create() *cli.App {
@@ -57,64 +58,64 @@ func printResult(ip net.IP, network *net.IPNet) {
 
 func printAddress(ip net.IP) {
 	fmt.Println(
-		PadFirstColumn("Address:"),
-		color.Blue(PadSecondColumn(ip.String())),
-		color.Yellow(FormatIpAsDottedBits(ip)))
+		format.PadFirstColumn("Address:"),
+		color.Blue(format.PadSecondColumn(ip.String())),
+		color.Yellow(format.IpAsDottedBits(ip)))
 }
 
 func printNetmask(mask net.IPMask) {
-	netmask := FormatMaskAsDottedDecimal(mask)
+	netmask := format.MaskAsDottedDecimal(mask)
 	decimalNetmask, _ := mask.Size()
 	fmt.Println(
-		PadFirstColumn("Netmask:"),
-		color.Blue(PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask))),
-		color.Red(FormatMaskAsDottedBits(mask)))
+		format.PadFirstColumn("Netmask:"),
+		color.Blue(format.PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask))),
+		color.Red(format.MaskAsDottedBits(mask)))
 }
 
 func printWildcard(mask net.IPMask) {
 	wildcard := calc.DeriveWildcard(mask)
 
 	fmt.Println(
-		PadFirstColumn("Wildcard:"),
-		color.Blue(PadSecondColumn(wildcard.String())),
-		color.Yellow(FormatWildcardAsDottedBits(wildcard)))
+		format.PadFirstColumn("Wildcard:"),
+		color.Blue(format.PadSecondColumn(wildcard.String())),
+		color.Yellow(format.WildcardAsDottedBits(wildcard)))
 }
 
 func printNetwork(network *net.IPNet) {
 	decimalNetmask, _ := network.Mask.Size()
 	fmt.Println(
-		PadFirstColumn("Network:"),
-		color.Blue(PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask))),
-		color.Yellow(FormatIpAsDottedBits(network.IP)))
+		format.PadFirstColumn("Network:"),
+		color.Blue(format.PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask))),
+		color.Yellow(format.IpAsDottedBits(network.IP)))
 }
 
 func printBroadcast(ip net.IP, network *net.IPNet) {
 	broadcast := calc.DeriveBroadCast(ip, network)
 	fmt.Println(
-		PadFirstColumn("Broadcast:"),
-		color.Blue(PadSecondColumn(broadcast.String())),
-		color.Yellow(FormatIpAsDottedBits(broadcast)))
+		format.PadFirstColumn("Broadcast:"),
+		color.Blue(format.PadSecondColumn(broadcast.String())),
+		color.Yellow(format.IpAsDottedBits(broadcast)))
 }
 
 func printHostMin(network *net.IPNet) {
 	hostMin := calc.HostMin(network)
 	fmt.Println(
-		PadFirstColumn("HostMin:"),
-		color.Blue(PadSecondColumn(hostMin)),
-		color.Yellow(FormatIpAsDottedBits(hostMin)))
+		format.PadFirstColumn("HostMin:"),
+		color.Blue(format.PadSecondColumn(hostMin)),
+		color.Yellow(format.IpAsDottedBits(hostMin)))
 }
 
 func printHostMax(ip net.IP, network *net.IPNet) {
 	hostMax := calc.HostMax(ip, network)
 	fmt.Println(
-		PadFirstColumn("HostMax:"),
-		color.Blue(PadSecondColumn(hostMax)),
-		color.Yellow(FormatIpAsDottedBits(hostMax)))
+		format.PadFirstColumn("HostMax:"),
+		color.Blue(format.PadSecondColumn(hostMax)),
+		color.Yellow(format.IpAsDottedBits(hostMax)))
 }
 
 func printHostsPerNet(ip net.IP, network *net.IPNet) {
 	number := calc.HostsPerNetwork(ip, network)
 	fmt.Print(
-		PadFirstColumn("Hosts/Net:"),
-		color.Blue(PadSecondColumn(fmt.Sprintf("%d", number))))
+		format.PadFirstColumn("Hosts/Net:"),
+		color.Blue(format.PadSecondColumn(fmt.Sprintf("%d", number))))
 }
