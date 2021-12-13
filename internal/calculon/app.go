@@ -3,7 +3,7 @@ package calculon
 import (
 	"errors"
 	"fmt"
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 	"net"
 	"weltraumschaf.de/calculon/internal/calculon/calc"
 	"weltraumschaf.de/calculon/internal/calculon/color"
@@ -11,15 +11,21 @@ import (
 )
 
 func Create() *cli.App {
-	var app = cli.NewApp()
-	app.Name = "calculon"
-	app.Usage = "Tool to calculate IP stuff"
-	app.UsageText = app.Name + " 192.168.123.0/24"
-	app.Author = "Sven Strittmatter"
-	app.Email = "ich@weltraumschaf.de"
-	app.Description = "Simple IPv4 calculator."
-	app.Version = "1.0.0"
-	app.Action = Execute
+	const name = "calculon"
+	app := &cli.App{
+		Name:      name,
+		Usage:     "Tool to calculate IP stuff",
+		UsageText: name + " 192.168.123.0/24",
+		Description: "Simple IPv4 calculator.",
+		Version:     "1.0.0",
+		Authors: []*cli.Author{
+			{
+				Name: "Sven Strittmatter",
+				Email:  "ich@weltraumschaf.de",
+			},
+		},
+		Action:      Execute,
+	}
 	return app
 }
 
