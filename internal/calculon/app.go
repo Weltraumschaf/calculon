@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/urfave/cli"
 	"net"
+	color "weltraumschaf.de/calculon/internal/calculon/color"
 )
 
 func Create() *cli.App {
@@ -56,8 +57,8 @@ func printResult(ip net.IP, network *net.IPNet) {
 func printAddress(ip net.IP) {
 	fmt.Println(
 		PadFirstColumn("Address:"),
-		Blue(PadSecondColumn(ip.String())),
-		Yellow(FormatIpAsDottedBits(ip)))
+		color.Blue(PadSecondColumn(ip.String())),
+		color.Yellow(FormatIpAsDottedBits(ip)))
 }
 
 func printNetmask(mask net.IPMask) {
@@ -65,8 +66,8 @@ func printNetmask(mask net.IPMask) {
 	decimalNetmask, _ := mask.Size()
 	fmt.Println(
 		PadFirstColumn("Netmask:"),
-		Blue(PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask))),
-		Red(FormatMaskAsDottedBits(mask)))
+		color.Blue(PadSecondColumn(fmt.Sprintf("%s = %d", netmask, decimalNetmask))),
+		color.Red(FormatMaskAsDottedBits(mask)))
 }
 
 func printWildcard(mask net.IPMask) {
@@ -74,45 +75,45 @@ func printWildcard(mask net.IPMask) {
 
 	fmt.Println(
 		PadFirstColumn("Wildcard:"),
-		Blue(PadSecondColumn(wildcard.String())),
-		Yellow(FormatWildcardAsDottedBits(wildcard)))
+		color.Blue(PadSecondColumn(wildcard.String())),
+		color.Yellow(FormatWildcardAsDottedBits(wildcard)))
 }
 
 func printNetwork(network *net.IPNet) {
 	decimalNetmask, _ := network.Mask.Size()
 	fmt.Println(
 		PadFirstColumn("Network:"),
-		Blue(PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask))),
-		Yellow(FormatIpAsDottedBits(network.IP)))
+		color.Blue(PadSecondColumn(fmt.Sprintf("%s/%d", network.IP, decimalNetmask))),
+		color.Yellow(FormatIpAsDottedBits(network.IP)))
 }
 
 func printBroadcast(ip net.IP, network *net.IPNet) {
 	broadcast := DeriveBroadCast(ip, network)
 	fmt.Println(
 		PadFirstColumn("Broadcast:"),
-		Blue(PadSecondColumn(broadcast.String())),
-		Yellow(FormatIpAsDottedBits(broadcast)))
+		color.Blue(PadSecondColumn(broadcast.String())),
+		color.Yellow(FormatIpAsDottedBits(broadcast)))
 }
 
 func printHostMin(network *net.IPNet) {
 	hostMin := HostMin(network)
 	fmt.Println(
 		PadFirstColumn("HostMin:"),
-		Blue(PadSecondColumn(hostMin)),
-		Yellow(FormatIpAsDottedBits(hostMin)))
+		color.Blue(PadSecondColumn(hostMin)),
+		color.Yellow(FormatIpAsDottedBits(hostMin)))
 }
 
 func printHostMax(ip net.IP, network *net.IPNet) {
 	hostMax := HostMax(ip, network)
 	fmt.Println(
 		PadFirstColumn("HostMax:"),
-		Blue(PadSecondColumn(hostMax)),
-		Yellow(FormatIpAsDottedBits(hostMax)))
+		color.Blue(PadSecondColumn(hostMax)),
+		color.Yellow(FormatIpAsDottedBits(hostMax)))
 }
 
 func printHostsPerNet(ip net.IP, network *net.IPNet) {
 	number := HostsPerNetwork(ip, network)
 	fmt.Print(
 		PadFirstColumn("Hosts/Net:"),
-		Blue(PadSecondColumn(fmt.Sprintf("%d", number))))
+		color.Blue(PadSecondColumn(fmt.Sprintf("%d", number))))
 }
