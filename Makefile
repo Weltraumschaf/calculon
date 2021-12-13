@@ -14,16 +14,13 @@ all: build
 
 .PHONY: clean ## Clean the project.
 clean:
-	@echo "Deleting files ..."
 	rm -rfv $(BIN_DIR)
 
 .PHONY: build
 build: ## Build the project
-	@echo "Building project ..."
 	mkdir -p $(BIN_DIR)
 	go build -o $(BIN_DIR)/calculon $(PROJECT_DIR)/cmd/calculon/main.go
-	@echo "Done!"
-	@echo "Final binary is located in $(BIN_DIR)"
+	@echo "Binary is located in $(BIN_DIR)"
 
 .PHONY: run
 run: ## Run the project's binary.
@@ -31,7 +28,6 @@ run: ## Run the project's binary.
 
 .PHONY: test
 test: ## Run the unit tests.
-	@echo "Testing project ..."
 	go test -v ./...
 
 cover: ## Generate code coverage report
