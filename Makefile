@@ -4,8 +4,6 @@
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-all: build
-
 PROJECT_DIR 	= $(shell pwd)
 BIN_DIR			= $(PROJECT_DIR)/bin
 TOOLS_DIR		= $(PROJECT_DIR)/tools
